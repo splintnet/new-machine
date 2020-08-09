@@ -48,6 +48,11 @@ mkdir -p infrastructure/loadbalancer &&
     wget "${DOWNLOAD_URL}infrastructure/loadbalancer/start.sh" -O infrastructure/loadbalancer/start.sh &&
     cd infrastructure/loadbalancer && chmod +x start.sh && ./start.sh && cd ~
 
+mkdir -p infrastructure/mysql &&
+    wget "${DOWNLOAD_URL}infrastructure/mysql/docker-compose.yml" -O infrastructure/mysql/docker-compose.yml &&
+    wget "${DOWNLOAD_URL}infrastructure/mysql/start.sh" -O infrastructure/mysql/start.sh &&
+    cd infrastructure/mysql && chmod +x start.sh && ./start.sh && cd ~
+
 mkdir -p infrastructure/redis &&
     wget "${DOWNLOAD_URL}infrastructure/redis/docker-compose.yml" -O infrastructure/redis/docker-compose.yml &&
     wget "${DOWNLOAD_URL}infrastructure/redis/start.sh" -O infrastructure/redis/start.sh &&
@@ -62,4 +67,4 @@ mkdir -p apps
 
 # Generate SSH Key
 
-ssh-keygen -q -t rsa -N '' <<< ""$'\n'"y" 2>&1 >/dev/null
+ssh-keygen -q -t rsa -N '' <<<""$'\n'"y" 2>&1 >/dev/null
