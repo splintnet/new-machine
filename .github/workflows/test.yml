@@ -1,0 +1,14 @@
+name: Test Script
+on: push
+
+jobs:
+  linux:
+    name: Linux build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Test script
+        run: ./setup.sh
