@@ -1,0 +1,13 @@
+version: "3.5"
+
+services:
+  redis:
+    image: redis
+    networks:
+      - redis
+    restart: unless-stopped
+    container_name: redis
+
+networks:
+  redis:
+    external: true

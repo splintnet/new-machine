@@ -1,0 +1,27 @@
+version: "3.3"
+services:
+  datadog-agent:
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "/proc/:/host/proc/:ro"
+      - "/sys/fs/cgroup/:/host/sys/fs/cgroup:ro"
+      - "/etc/passwd:/etc/passwd:ro"
+    ports:
+      - "127.0.0.1:8126:8126/tcp"
+    environment:
+      - DD_API_KEY=PASTE_HERE_YOUR_KEY
+      - DD_APM_ENABLED=true
+      - DD_SITE=datadoghq.eu
+      - DD_APM_DD_URL=https://trace.agent.datadoghq.eu
+      - DD_LOGS_ENABLED=true
+      - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
+      - DD_PROCESS_AGENT_ENABLED=true
+      - DD_TRACE_ANALYTICS_ENABLED=true
+      - DD_APM_NON_LOCAL_TRAFFIC=true
+    image: "datadog/agent:latest"
+    networks:
+      datadog:
+
+networks:
+  datadog:
+    external: true
