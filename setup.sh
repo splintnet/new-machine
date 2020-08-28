@@ -34,36 +34,36 @@ sudo usermod --shell /bin/bash www-data
 sudo usermod -a -G docker www-data
 
 # Create www home
-sudo mkdir -p /var/www
+sudo mkdir -p /var/www/apps
 sudo chown -R www-data: /var/www
 sudo usermod -d /var/www www-data
 
 # CD to it and get the infrastructure
-su www-data && cd ~
+cd /var/www
 
 DOWNLOAD_URL=https://raw.githubusercontent.com/splintnet/new-machine/master/
 
 mkdir -p infrastructure/loadbalancer &&
     wget "${DOWNLOAD_URL}infrastructure/loadbalancer/docker-compose.yml" -O infrastructure/loadbalancer/docker-compose.yml &&
     wget "${DOWNLOAD_URL}infrastructure/loadbalancer/start.sh" -O infrastructure/loadbalancer/start.sh &&
-    cd infrastructure/loadbalancer && chmod +x start.sh && ./start.sh && cd ~
+    cd infrastructure/loadbalancer && chmod +x start.sh && ./start.sh && cd /var/www
 
 mkdir -p infrastructure/mysql &&
     wget "${DOWNLOAD_URL}infrastructure/mysql/docker-compose.yml" -O infrastructure/mysql/docker-compose.yml &&
     wget "${DOWNLOAD_URL}infrastructure/mysql/start.sh" -O infrastructure/mysql/start.sh &&
-    cd infrastructure/mysql && chmod +x start.sh && ./start.sh && cd ~
+    cd infrastructure/mysql && chmod +x start.sh && ./start.sh && cd /var/www
 
 mkdir -p infrastructure/redis &&
     wget "${DOWNLOAD_URL}infrastructure/redis/docker-compose.yml" -O infrastructure/redis/docker-compose.yml &&
     wget "${DOWNLOAD_URL}infrastructure/redis/start.sh" -O infrastructure/redis/start.sh &&
-    cd infrastructure/redis && chmod +x start.sh && ./start.sh && cd ~
+    cd infrastructure/redis && chmod +x start.sh && ./start.sh && cd /var/www
 
 mkdir -p infrastructure/datadog &&
     wget "${DOWNLOAD_URL}infrastructure/datadog/docker-compose.yml" -O infrastructure/datadog/docker-compose.yml &&
     wget "${DOWNLOAD_URL}infrastructure/datadog/start.sh" -O infrastructure/datadog/start.sh &&
-    cd infrastructure/datadog && chmod +x start.sh && cd ~
+    cd infrastructure/datadog && chmod +x start.sh && cd /var/www
 
-mkdir -p apps
+sudo chown -R www-data: /var/www
 
 # Generate SSH Key
 
