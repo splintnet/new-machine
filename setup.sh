@@ -11,6 +11,9 @@ sudo apt-get install \
     gnupg-agent \
     software-properties-common \
     -y
+    
+# Define some alias    
+wget -O - https://gist.github.com/jgrodziski/9ed4a17709baad10dbcd4530b60dfcbb/raw/61889c87d122ea71a7af8301196792b06b899cda/docker-aliases.sh > ~/.bash_aliases
 
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 
