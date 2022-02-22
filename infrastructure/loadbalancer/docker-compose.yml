@@ -2,23 +2,25 @@ version: "3.5"
 
 services:
   loadbalancer:
-    image: traefik:v2.4
+    image: traefik:v2.6
     container_name: traefik
     restart: unless-stopped
     command:
       - "--log.level=DEBUG"
       # - "--api.insecure=true"
       # - "--api.dashboard=true"
+      - "--providers.file.filename=/etc/traefik/dynamic.yml"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--providers.docker.network=traefik"
       # - "--providers.file.filename=/dyn.yaml"
-      # - "--providers.file.watch=true"
+      - "--providers.file.watch=true"
       - "--entrypoints.web.address=:80"
       - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
       - "--entrypoints.web.http.redirections.entryPoint.permanent=true"
       - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
       - "--entrypoints.websecure.address=:443"
+      - "--entrypoints.websecure.http.middlewares=secHeaders@file"
       - "--certificatesresolvers.le.acme.httpChallenge=true"
       - "--certificatesresolvers.le.acme.httpChallenge.entryPoint=web"
       - "--certificatesresolvers.le.acme.email=info@splintnet.de"
@@ -29,6 +31,7 @@ services:
       # - 8080:8080
     volumes:
       - ./letsencrypt:/letsencrypt
+      - ./dynamic.yml:/etc/traefik/dynamic.yml
       # - ./certificates:/certificates
       # - ./dyn.yaml:/dyn.yaml
       - /var/run/docker.sock:/var/run/docker.sock:ro
