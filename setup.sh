@@ -57,4 +57,8 @@ ssh-keygen -q -t rsa -N '' <<<""$'\n'"y" 2>&1 >/dev/null
 
 su www-data
 
+# Generate SSH Key for www-data
 ssh-keygen -q -t rsa -N '' <<<""$'\n'"y" 2>&1 >/dev/null
+
+# Authorize myself for CI/CD
+cat /var/www/.ssh/id_rsa.pub > /var/www/.ssh/authorized_keys
