@@ -12,8 +12,8 @@ sudo apt-get install \
     software-properties-common \
     -y
 
-# Define some alias
-wget -O - https://gist.github.com/jgrodziski/9ed4a17709baad10dbcd4530b60dfcbb/raw/61889c87d122ea71a7af8301196792b06b899cda/docker-aliases.sh > ~/.bash_aliases
+# Define some alias for root
+wget -O - https://gist.githubusercontent.com/jgrodziski/9ed4a17709baad10dbcd4530b60dfcbb/raw/61889c87d122ea71a7af8301196792b06b899cda/docker-aliases.sh > ~/.bash_aliases
 
 # Setup Docker
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
@@ -48,6 +48,10 @@ wget https://github.com/splintnet/new-machine/archive/refs/heads/master.zip -O m
 
 # Extract and tidy up
 unzip machine.zip && mv new-machine-master/* ./ && rm -rf machine.zip new-machine-master
+
+# Copy bash to www-data
+cp /root/.bashrc /var/www/.bashrc
+cp /root/.bash_aliases /var/www/.bash_aliases
 
 # Correct owner
 sudo chown -R www-data: /var/www
