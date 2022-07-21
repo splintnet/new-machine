@@ -44,7 +44,7 @@ sudo usermod -d /var/www www-data
 cd /var/www
 
 # Download master
-wget https://github.com/splintnet/new-machine/archive/refs/heads/master.zip -O machine.zip
+wget https://github.com/splintnet/new-machine/archive/refs/heads/master.zip -O ./machine.zip
 
 # Extract and tidy up
 unzip machine.zip && mv new-machine-master/* ./ && rm -rf machine.zip new-machine-master
