@@ -1,13 +1,14 @@
 # Updates
 sudo apt update && apt upgrade -y && apt dist-upgrade -y && apt autoremove
 
-# Install Docker
+# Install Deps
 sudo apt-get install \
     apt-transport-https \
     ca-certificates \
     wget \
     curl \
     unzip \
+    gnupg \
     gnupg-agent \
     software-properties-common \
     -y
@@ -15,21 +16,18 @@ sudo apt-get install \
 # Define some alias for root
 wget -O - https://gist.githubusercontent.com/jgrodziski/9ed4a17709baad10dbcd4530b60dfcbb/raw/61889c87d122ea71a7af8301196792b06b899cda/docker-aliases.sh > ~/.bash_aliases
 
-# Setup Docker
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+sudo chmod a+r /etc/apt/keyrings/docker.gpg
 
-sudo add-apt-repository \
-    "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-   $(lsb_release -cs) \
-   stable"
+# Add the repository to Apt sources:
+echo \
+  "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
 sudo apt-get update -y
-sudo apt-get install docker-ce docker-ce-cli containerd.io -y
-
-# Setup Docker Compose
-sudo curl -L "https://github.com/docker/compose/releases/download/v2.16.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
-sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
 # Add Docker User
 sudo usermod --shell /bin/bash www-data
